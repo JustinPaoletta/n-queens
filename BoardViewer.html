@@ -34,7 +34,7 @@
       window.displayBoard = function(matrix){
         $('body').html(
           new BoardView({
-            model: new Board(matrix)
+            model: new Board(matrix),
           }).render()
         );
       };
