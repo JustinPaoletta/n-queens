@@ -56,31 +56,35 @@ window.findNQueensSolution = function(n) {
   let board = new Board({'n': n});
   let count = 0;
   let tracker = 0;
-  do {
+
   // iterate through rows
-    for (let r = 0; r < n; r++ ) {
+  for (let r = 0; r < n; r++ ) {
     // iterate columns
-      for (let c = 0; c < n; c++ ) {
+    for (let c = 0; c < n; c++ ) {
       // tries to place a queen
-        board.togglePiece(r, c);
-        // increments count to try to get to n rooks
-        count++;
-        // are there now conflicts on the board?
-        if (board.hasAnyQueensConflicts()) {
+      board.togglePiece(r, c);
+      // increments count to try to get to n queens
+      count++;
+
+      // are there now conflicts on the board?
+      if (board.hasAnyQueensConflicts()) {
+
         // remove it if so
-          board.togglePiece(r, c);
-          // decrements the count, take that rook away
-          count --;
+        board.togglePiece(r, c);
+        // decrements the count, take that queen away
+        count --;
+
+        if (count === n - 1) {
+          console.log('booyah!');
+          tracker++;
         }
       }
-    }
-    if (count === n) {
-      tracker ++;
-    }
-  } while (count < n);
 
-  var solution = board.rows();
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+    }
+  }
+
+  var solution = tracker;
+  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
   // let start = -1;
   // let count = 0;
