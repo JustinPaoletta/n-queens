@@ -34,20 +34,22 @@
       window.displayBoard = function(matrix){
         $('body').html(
           new BoardView({
-            model: new Board(matrix),
+            model: new Board(matrix)
           }).render()
         );
       };
       $(function(){
         // this is a pre-baked solution for n-queens in the n = 4 case, rendered to the screen using our handy visualizer.
-        displayBoard([
-          [0, 1, 0, 0],
-          [0, 0, 0, 1],
-          [1, 0, 0, 0],
-          [0, 0, 1, 0]
-        ]);
+        // displayBoard([
+        //   [0, 1, 0, 0, 0, 0],
+        //   [0, 0, 0, 1, 0, 0],
+        //   [1, 0, 0, 0, 0, 0],
+        //   [0, 0, 1, 0, 0, 0],
+        //   [0, 0, 1, 0, 0, 0],
+        // ]);
 
-        var n = 4;
+        var n = 7;
+        displayBoard({'n': n});
         findNRooksSolution(n);
         countNRooksSolutions(n);
         findNQueensSolution(n);
