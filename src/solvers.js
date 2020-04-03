@@ -135,49 +135,47 @@ window.findNQueensSolution = function(n) {
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
 
-  for (r = 0; r < n; r++) {
-    for (c = 0; c < n; c++) {
+  var solutionCount = 0;
+  var rangeOfQueens = [];
 
+
+  var incrementRow = function(row) {
+    var continueIncrement = true;
+    if (rangeOfQueens[row] < n - 1) {
+      rangeOfQueens[row]++;
+    } else {
+      if (row < n - 1) {
+        rangeOfQueens[row] = 0;
+        continueIncrement = incrementRow(row + 1);
+      } else {
+        return false;
+      }
     }
-  }
+    return continueIncrement;
+  };
 
 
+  // create a array with indexes of 0 - (n - 1) and set all values equal to 0
+  _.range(0, n).forEach((index) => rangeOfQueens[index] = 0);
+  // rowColumn[0] = 0; // row = 0, column = 0  board.togglePiece(0,0) = 1 (Queen)
+  // rowColumn[1] = 0; (1,0)
+  // rowColumn[2] = 0; (2,0)
+  // rowColumn[3] = 0; (3,0)
+  // rowColumn[4] = 0; (4,0)
 
-  // let board;
-  // let rowStart = -1;
-  // let colStart = -1;
-  // let count = 0;
-  // var solutionCount = 0;
-  // let resultsArray = [];
 
-  // do {
-  //   rowStart++;
-  //   colStart = -1;
-  //   do {
-  //     colStart++;
-  //     count = 0;
-  //     board = new Board ({'n': n});
-  //     for (let y = 0 + rowStart; y < n + rowStart; y++) {
-  //       let r = (y >= n) ? y - n : y;
-  //       for (let x = 0 + colStart; x < n + colStart; x++) {
-  //         let c = (x >= n) ? x - n : x;
-  //         board.togglePiece(r, c);
-  //         count++;
-  //         if (board.hasAnyQueenConflictsOn(r, c)) {
-  //           board.togglePiece(r, c);
-  //           count--;
-  //         }
-  //       }
-  //     }
-  //     if (count === n) {
-  //       var boardString = JSON.stringify(board.rows());
-  //       if (!resultsArray.includes(boardString)) {
-  //         solutionCount++;
-  //         resultsArray.push(boardString);
-  //       }
-  //     }
-  //   } while (colStart < n - 1);
-  // } while (rowStart < n - 1);
+  do {
+    //creates new board
+    board = new Board ({'n': n});
+    // toggles queens on initially all in first col
+    rangeOfQueens.forEach((c, r) => board.togglePiece(r, c));
+
+    // if no conflicts on board increase solution count
+    if (!board.hasAnyQueensConflicts()) {
+      solutionCount++;
+    }
+  } while (incrementRow(0));
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
+
 };
