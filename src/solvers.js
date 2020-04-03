@@ -165,6 +165,7 @@ window.countNQueensSolutions = function(n) {
 
 
   do {
+
     //creates new board
     board = new Board ({'n': n});
     // toggles queens on initially all in first col
